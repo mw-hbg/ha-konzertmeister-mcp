@@ -1,0 +1,32 @@
+name: Release
+
+# Actions → Release → "Run workflow": enter the new version.
+# Builds and pushes the images first, then raises the version in
+# konzertmeister_mcp/config.yaml (that is when Home Assistant offers the update),
+# finishes the changelog, tags v<version> and creates the GitHub release.
+# The steps themselves live in mw-hbg/workflows (shared by all projects).
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New version, e.g. 1.2.3"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    uses: mw-hbg/workflows/.github/workflows/ha-app-release.yml@main
+    with:
+      app: konzertmeister_mcp
+      version: ${{ inputs.version }}
+    secrets:
+      # Owner's token: release commit, tag and release appear under mw-hbg
+      release-token: ${{ secrets.RELEASE_TOKEN }}

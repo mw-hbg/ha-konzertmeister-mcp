@@ -1,0 +1,32 @@
+---
+configuration:
+  remote_access:
+    name: Remote access
+    description: >-
+      webhook (recommended) = reachable through your existing Home Assistant address
+      (Nabu Casa, Cloudflare Tunnel, reverse proxy …), nothing else to set up. Installs a
+      small helper integration; Home Assistant must be restarted once.
+      direct = you route your own HTTPS hostname to port 8100 of this app (see “Network” below).
+      Switching to direct: the app removes its helper integration by itself on the next start.
+      The connector URLs change when switching.
+  public_url:
+    name: Public address
+    description: >-
+      Optional – leave empty in most cases. Only needed if the app page cannot work out your
+      public address (shown as a placeholder there). Webhook: your Home Assistant address,
+      e.g. https://home.example.com. Direct: the hostname you routed to this app. Only scheme
+      and host are used.
+  key_notification:
+    name: Notification for rejected API keys
+    description: >-
+      Show a repair notice in Home Assistant if Konzertmeister rejects the API key of an
+      association (e.g. because a leader created a new key).
+  log_level:
+    name: Log level
+    description: >-
+      How much the app writes to its log. info is enough for everyday use; debug also logs
+      every single request of the AI (only for troubleshooting).
+network:
+  8100/tcp: >-
+    Only for remote access “direct”: MCP endpoint (protected by the secret path). Leave empty
+    with the default webhook mode.

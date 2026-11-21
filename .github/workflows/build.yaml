@@ -1,0 +1,27 @@
+name: Test
+
+# Every pull request and every push to main. Nothing is published here;
+# releases are made with the "Release" workflow (Actions → Release).
+# The steps themselves live in mw-hbg/workflows (shared by all projects).
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  app:
+    uses: mw-hbg/workflows/.github/workflows/ha-app-test.yml@main
+    with:
+      app: konzertmeister_mcp
+
+  translations:
+    uses: mw-hbg/workflows/.github/workflows/translations-check.yml@main
+    with:
+      groups: |
+        konzertmeister_mcp/rootfs/app/i18n/*.json
+        konzertmeister_mcp/translations/*.yaml
+        konzertmeister_mcp/rootfs/app/integration/konzertmeister_mcp_webhook/strings.json konzertmeister_mcp/rootfs/app/integration/konzertmeister_mcp_webhook/translations/*.json

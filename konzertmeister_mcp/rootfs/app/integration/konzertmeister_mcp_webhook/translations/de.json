@@ -1,0 +1,37 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Bereits eingerichtet.",
+      "invalid_discovery": "Die App Konzertmeister MCP hat ungültige Einstellungen gesendet.",
+      "set_up_by_app": "Diese Integration wird automatisch von der App Konzertmeister MCP eingerichtet. Installiere und starte stattdessen die App."
+    }
+  },
+  "issues": {
+    "restart_required": {
+      "title": "Konzertmeister MCP: Neustart erforderlich",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Home Assistant neu starten",
+            "description": "Die App Konzertmeister MCP hat ihre Hilfs-Integration auf Version {version} aktualisiert. Home Assistant muss einmal neu gestartet werden, um sie zu laden. Klicke auf Absenden, um jetzt neu zu starten."
+          }
+        }
+      }
+    },
+    "api_key": {
+      "title": "Konzertmeister MCP: API-Schlüssel von {name} abgelehnt",
+      "description": "Konzertmeister lehnt den API-Schlüssel des Vereins **{name}** ab – der KI-Assistent kann dessen Konzertmeister-Daten nicht nutzen. Frag einen Leiter des Vereins nach dem aktuellen Schlüssel (Konzertmeister-Web-App: Vereinsdetails → Bearbeiten → Public API), öffne **Konzertmeister** in der Seitenleiste und trag ihn in der Karte dieses Vereins ein. Dieser Hinweis verschwindet danach von selbst."
+    }
+  },
+  "removal": {
+    "title": "Konzertmeister MCP entfernt",
+    "message": "Die App Konzertmeister MCP wurde deinstalliert, deshalb hat sich ihre Hilfs-Integration für den Fernzugriff selbst entfernt (samt Dateien). Sonst ist nichts zu tun – ein Neustart ist nicht nötig."
+  },
+  "entity": {
+    "switch": {
+      "mcp_server": {
+        "name": "Server"
+      }
+    }
+  }
+}

@@ -1,0 +1,95 @@
+#include <tunables/global>
+
+# AppArmor profile of the Konzertmeister MCP app.
+#
+# Everything that is not listed here is blocked by the kernel – for every
+# process in the container, including the app's internal part running as root.
+# Most important rule: in the Home Assistant configuration folder the app may
+# only touch its own helper integration (custom_components/konzertmeister_mcp_webhook).
+#
+# The Supervisor renames the profile to the app's slug when it loads it.
+profile konzertmeister_mcp flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  # --- Capabilities --------------------------------------------------------
+  # setuid/setgid: start the MCP servers as the unprivileged users "km1" … "km10",
+  # nginx workers as "www-data". chown/fowner: hand the server its folders.
+  capability setuid,
+  capability setgid,
+  capability chown,
+  capability fowner,
+  capability dac_override,
+  capability dac_read_search,
+  capability kill,
+
+  # --- Network ---------------------------------------------------------------
+  network inet stream,
+  network inet6 stream,
+  network inet dgram,
+  network inet6 dgram,
+  network unix stream,
+  network unix dgram,
+  network netlink raw,
+
+  # Docker stops the app, the app stops its own child processes.
+  signal,
+
+  # --- Programs that may run ---------------------------------------------------
+  /usr/local/bin/python3* ix,
+  /usr/sbin/nginx ix,
+
+  # --- System and Python (read only) -------------------------------------------
+  / r,
+  /usr/** mr,
+  /lib/** mr,
+  /lib64/** mr,
+  /bin/** mr,
+  /sbin/** mr,
+  /etc/** r,
+  deny /etc/shadow* rwklx,
+  deny /etc/gshadow* rwklx,
+  /proc/** r,
+  /sys/** r,
+  /dev/null rw,
+  /dev/zero r,
+  /dev/random r,
+  /dev/urandom r,
+  /dev/tty rw,
+  /dev/pts/* rw,
+  /dev/shm/** rwk,
+
+  # --- The app itself (read only) ----------------------------------------------
+  /app/ r,
+  /app/** r,
+
+  # --- Private storage of the app ----------------------------------------------
+  /data/ rw,
+  /data/** rwkl,
+  /tmp/ rw,
+  /tmp/** rwkl,
+
+  # --- nginx ---------------------------------------------------------------------
+  /var/lib/nginx/ rw,
+  /var/lib/nginx/** rwk,
+  /var/log/nginx/ rw,
+  /var/log/nginx/** rw,
+  /run/ r,
+  /run/nginx.pid rw,
+
+  # --- Home Assistant configuration folder: ONLY the helper integration ---------
+  /homeassistant/ r,
+  /homeassistant/custom_components/ rw,
+  /homeassistant/custom_components/konzertmeister_mcp_webhook/ rw,
+  /homeassistant/custom_components/konzertmeister_mcp_webhook/** rwl,
+
+
+  # Never: kernel and system settings
+  deny /proc/sys/** w,
+  deny /sys/** w,
+  deny @{PROC}/sysrq-trigger rwklx,
+  deny @{PROC}/kcore rwklx,
+  deny mount,
+  deny umount,
+  deny pivot_root,
+  deny ptrace,
+}

@@ -1,0 +1,18 @@
+{
+  "domain": "konzertmeister_mcp_webhook",
+  "name": "Konzertmeister MCP (remote access)",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [
+    "webhook",
+    "repairs"
+  ],
+  "documentation": "https://github.com/mw-hbg/ha-konzertmeister-mcp",
+  "issue_tracker": "https://github.com/mw-hbg/ha-konzertmeister-mcp/issues",
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "version": "0.1.0",
+  "after_dependencies": [
+    "hassio"
+  ]
+}

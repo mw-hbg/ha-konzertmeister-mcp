@@ -1,0 +1,32 @@
+---
+configuration:
+  remote_access:
+    name: Fernzugriff
+    description: >-
+      webhook (empfohlen) = erreichbar über deine bestehende Home-Assistant-Adresse
+      (Nabu Casa, Cloudflare Tunnel, Reverse Proxy …), sonst nichts einzurichten. Installiert
+      eine kleine Hilfs-Integration; Home Assistant muss einmal neu gestartet werden.
+      direct = du leitest einen eigenen HTTPS-Hostnamen auf Port 8100 dieser App (siehe „Netzwerk“ unten).
+      Beim Wechsel auf direct entfernt die App ihre Hilfs-Integration beim nächsten Start selbst.
+      Die Connector-URLs ändern sich beim Wechsel.
+  public_url:
+    name: Öffentliche Adresse
+    description: >-
+      Optional – meist leer lassen. Nur nötig, wenn die App-Seite deine öffentliche Adresse
+      nicht ermitteln kann (dort als Platzhalter zu sehen). Webhook: deine Home-Assistant-Adresse,
+      z. B. https://home.example.com. Direct: der Hostname, den du auf diese App leitest. Es
+      werden nur Schema und Host verwendet.
+  key_notification:
+    name: Hinweis bei abgelehntem API-Schlüssel
+    description: >-
+      Zeigt in Home Assistant einen Reparatur-Hinweis, wenn Konzertmeister den API-Schlüssel
+      eines Vereins ablehnt (z. B. weil ein Leiter einen neuen Schlüssel erstellt hat).
+  log_level:
+    name: Protokollstufe
+    description: >-
+      Wie viel die App in ihr Protokoll schreibt. info reicht im Alltag; debug protokolliert
+      zusätzlich jede einzelne Anfrage der KI (nur zur Fehlersuche).
+network:
+  8100/tcp: >-
+    Nur für Fernzugriff „direct“: MCP-Endpunkt (geschützt durch den geheimen Pfad). Beim
+    Standard-Modus webhook leer lassen.

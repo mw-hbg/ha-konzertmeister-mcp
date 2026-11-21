@@ -1,0 +1,12 @@
+{
+  "entity": {
+    "switch": {
+      "mcp_server": {
+        "default": "mdi:robot-off-outline",
+        "state": {
+          "on": "mdi:robot-outline"
+        }
+      }
+    }
+  }
+}

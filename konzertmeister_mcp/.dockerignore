@@ -1,0 +1,4 @@
+# Only rootfs/ and constraints.txt go into the image.
+tests/
+scripts/
+*.md

@@ -1,0 +1,37 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Already set up.",
+      "invalid_discovery": "The Konzertmeister MCP app sent invalid settings.",
+      "set_up_by_app": "This integration is set up automatically by the Konzertmeister MCP app. Install and start the app instead."
+    }
+  },
+  "issues": {
+    "restart_required": {
+      "title": "Konzertmeister MCP: restart required",
+      "fix_flow": {
+        "step": {
+          "confirm": {
+            "title": "Restart Home Assistant",
+            "description": "The Konzertmeister MCP app has updated its helper integration to version {version}. Home Assistant must be restarted once to load it. Click Submit to restart now."
+          }
+        }
+      }
+    },
+    "api_key": {
+      "title": "Konzertmeister MCP: API key of {name} rejected",
+      "description": "Konzertmeister rejects the API key of the association **{name}** – the AI assistant cannot use its Konzertmeister data. Ask a leader of the association for the current key (Konzertmeister web app: association details → Edit → Public API), open **Konzertmeister** in the sidebar and enter it in the card of this association. This notice disappears by itself afterwards."
+    }
+  },
+  "removal": {
+    "title": "Konzertmeister MCP removed",
+    "message": "The Konzertmeister MCP app was uninstalled, so its helper integration for remote access removed itself (including its files). Nothing else to do – a restart is not needed."
+  },
+  "entity": {
+    "switch": {
+      "mcp_server": {
+        "name": "Server"
+      }
+    }
+  }
+}

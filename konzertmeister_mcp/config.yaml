@@ -1,0 +1,48 @@
+---
+name: Konzertmeister MCP
+version: "0.0.0"
+slug: konzertmeister_mcp
+description: >-
+  MCP server for Konzertmeister – let AI assistants (Claude, ChatGPT, …) read
+  your association's appointments and replies and, if you allow it, create
+  appointments from templates.
+url: https://github.com/mw-hbg/ha-konzertmeister-mcp
+# Pre-built images from GitHub Actions. Remove this line to build locally.
+image: ghcr.io/mw-hbg/{arch}-app-konzertmeister-mcp
+arch:
+  - amd64
+  - aarch64
+# Apps panel paths (/config/app/...) and the "Apps" naming exist since 2026.2
+homeassistant: "2026.2.0"
+stage: experimental
+ingress: true
+# No access to the Home Assistant API. The helper integration is set up
+# through the Supervisor's discovery service instead.
+discovery:
+  - konzertmeister_mcp_webhook
+map:
+  # Only used to copy the small helper integration that provides the webhook
+  # into custom_components/konzertmeister_mcp_webhook (and to remove it again in
+  # direct mode). Home Assistant offers no narrower mapping; apparmor.txt limits
+  # access to exactly that folder. Only the app's internal part (root) touches
+  # it – never the internet-facing MCP servers.
+  - type: homeassistant_config
+    read_only: false
+    path: /homeassistant
+panel_icon: mdi:music-clef-treble
+panel_title: Konzertmeister
+ports:
+  8100/tcp: null
+ports_description:
+  8100/tcp: >-
+    MCP endpoint for remote_access "direct" (protected by the secret path). Not needed with the default webhook mode.
+options:
+  remote_access: webhook
+  public_url: ""
+  key_notification: true
+  log_level: info
+schema:
+  remote_access: "list(webhook|direct)"
+  public_url: "str?"
+  key_notification: bool
+  log_level: "list(debug|info|warning|error)"

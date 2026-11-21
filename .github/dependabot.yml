@@ -1,0 +1,16 @@
+version: 2
+updates:
+  # Versions of the GitHub Actions building blocks
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+  # Base image of the app
+  - package-ecosystem: docker
+    directory: /konzertmeister_mcp
+    schedule:
+      interval: monthly
+    ignore:
+      # Stays on its Python minor version until upgraded deliberately
+      - dependency-name: python
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
