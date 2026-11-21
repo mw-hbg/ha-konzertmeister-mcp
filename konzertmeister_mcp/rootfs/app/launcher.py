@@ -16,6 +16,7 @@ settings of an association) · mcp_server · km_api · privacy.
 from __future__ import annotations
 
 import logging
+import os
 import signal
 import sys
 import threading
@@ -23,7 +24,7 @@ import threading
 import uvicorn
 
 import web
-from common import DATA, UI_PORT, load_options
+from common import DATA, OPTIONS_FILE, UI_PORT, load_options
 from remote import RemoteAccess
 from clubs import Services
 
@@ -36,6 +37,11 @@ def main() -> None:
     logging.basicConfig(level=level, format="%(asctime)s %(levelname)s %(message)s", stream=sys.stdout)
     logging.getLogger("httpx").setLevel(logging.DEBUG if level == logging.DEBUG else logging.WARNING)
     DATA.mkdir(parents=True, exist_ok=True)
+    # The MCP servers' users must not read the app options (written by the Supervisor).
+    try:
+        os.chmod(OPTIONS_FILE, 0o600)
+    except OSError:
+        pass
 
     services = Services()
     services.start_nginx()
