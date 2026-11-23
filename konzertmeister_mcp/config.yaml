@@ -1,6 +1,6 @@
 ---
 name: Konzertmeister MCP
-version: "0.0.0"
+version: "0.1.0"
 slug: konzertmeister_mcp
 description: >-
   MCP server for Konzertmeister – let AI assistants (Claude, ChatGPT, …) read

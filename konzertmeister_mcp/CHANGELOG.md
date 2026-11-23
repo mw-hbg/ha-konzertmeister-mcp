@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0
 
 - First release: MCP server for Konzertmeister in Home Assistant, using only the official
   Konzertmeister API with the API key of the association (checked with Konzertmeister when
